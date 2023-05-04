@@ -1,0 +1,14 @@
+{
+    "name": "dual-pint-atm",
+    "version": "0.0.1",
+    "description": "ATM security with dual pins",
+    "author": "Tamzid Rahman",
+    "private": true,
+    "license": "UNLICENSED",
+    "scripts": {
+      "setup": "cd backend && npm install && cd ../frontend && npm install",
+      "start:frontend": "cd frontend && npm run dev",
+      "start:backend": "cd backend && npm run start:dev",
+      "start": "(npm run start:frontend) & (npm run start:backend)"
+    }
+}
