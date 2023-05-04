@@ -1,7 +1,10 @@
 
 ## Description
 
-ATM Security having dual PIN feature
+ATM Security having dual PIN feature, made in JavaScript.
+
+frontend : VueJS<br>
+backend: NestJS
 
 ## Installation
 1. [Install NPM in Windows](https://nodejs.org/dist/v18.16.0/node-v18.16.0-x86.msi)
