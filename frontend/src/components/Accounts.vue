@@ -49,7 +49,7 @@
   }
   </script>
   
-  <style>
+  <style scoped>
   .submit-form {
     max-width: 1000px;
     margin: auto;
