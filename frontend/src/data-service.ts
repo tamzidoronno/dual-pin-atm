@@ -14,7 +14,7 @@ class DataService {
     return http.get(`/user/${account}`);
   }
   withdraw(data: any) {
-    return http.post("/withdraw",data);
+    return http.get("/withdraw",data);
   }
 }
 
