@@ -23,7 +23,7 @@ export class AppController {
     }
     return user;
   }
-  @Get('withdraw')
+  @Post('withdraw')
   withdraw(@Body() requestDto: { account: string; amount: number }) {
     return this.appService.withdraw(requestDto.account, requestDto.amount);
   }
