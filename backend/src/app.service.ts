@@ -27,11 +27,7 @@ export class AppService {
     return await this.userRepository.find();
   }
   async getUserByAccount(account: string): Promise<User> {
-    const user =  await this.userRepository.findOneBy({ account });
-    if(!user) {
-      throw new HttpException('Invalid card', HttpStatus.BAD_REQUEST);
-    }
-    return user;
+    return this.userRepository.findOneBy({ account });
   }
   async verifyPin(account: string, pin: number) {
     const user = await this.getUserByAccount(account);

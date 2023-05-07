@@ -1,6 +1,7 @@
-import { Body, Controller, Get, Param, Post } from '@nestjs/common';
+import { Body, Controller, Get, HttpException, HttpStatus, Param, Post } from '@nestjs/common';
 import { AppService } from './app.service';
 import { CreateUserDto } from './create-user.dto';
+import { User } from './user.entity';
 
 @Controller('api')
 export class AppController {
@@ -15,8 +16,12 @@ export class AppController {
     return this.appService.register(createUserDto);
   }
   @Get('user/:account')
-  getUser(@Param('account') account: string) {
-    return this.appService.getUserByAccount(account);
+  async getUser(@Param('account') account: string): Promise<User> {
+    const user = await this.appService.getUserByAccount(account);
+    if(!(user instanceof User)){
+      throw new HttpException('Invalid Card', HttpStatus.BAD_REQUEST);
+    }
+    return user;
   }
   @Get('withdraw')
   withdraw(@Body() requestDto: { account: string; amount: number }) {
