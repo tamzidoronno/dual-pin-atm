@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { CreateUserDto } from './create-user.dto';
@@ -26,8 +26,12 @@ export class AppService {
   async getUsers() {
     return await this.userRepository.find();
   }
-  async getUserByAccount(account: string) {
-    return await this.userRepository.findOneBy({ account });
+  async getUserByAccount(account: string): Promise<User> {
+    const user =  await this.userRepository.findOneBy({ account });
+    if(!user) {
+      throw new HttpException('Invalid card', HttpStatus.BAD_REQUEST);
+    }
+    return user;
   }
   async verifyPin(account: string, pin: number) {
     const user = await this.getUserByAccount(account);
@@ -37,12 +41,12 @@ export class AppService {
     if (user.highPin == pin) {
       return 'highPin';
     }
-    throw new Error('Invalid pin');
+    throw new HttpException('Invalid PIN', HttpStatus.BAD_REQUEST);
   }
   async withdraw(account: string, amount: number) {
     const user = await this.getUserByAccount(account);
     if (user.balance < amount) {
-      throw new Error('Insufficient funds');
+      throw new HttpException('Insufficient funds', HttpStatus.FORBIDDEN);
     }
     user.balance -= amount;
     user.securityBalance -= amount;
